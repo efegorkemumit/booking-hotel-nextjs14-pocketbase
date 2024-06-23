@@ -8,7 +8,7 @@ export default function Home() {
     <div className="bg-slate-600">
       <Button variant="destructive" size="icon">deneme</Button>
 
-      <ModeToggle/>
+      <ModeToggle/> 
 
     </div>
   );
