@@ -6,9 +6,7 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div className="bg-slate-600">
-      <Button variant="destructive" size="icon">deneme</Button>
-
-      <ModeToggle/> 
+     
 
     </div>
   );
