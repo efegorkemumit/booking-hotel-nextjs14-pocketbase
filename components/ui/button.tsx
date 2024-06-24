@@ -18,6 +18,8 @@ const buttonVariants = cva(
           "bg-slate-100 text-slate-900 hover:bg-slate-100/80 dark:bg-slate-800 dark:text-slate-50 dark:hover:bg-slate-800/80",
         ghost: "hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50",
         link: "text-slate-900 underline-offset-4 hover:underline dark:text-slate-50",
+        mybutton: "bg-mylight1 text-white dark:bg-mylight1 dark:text-white hover:brightness-125 dark:hover:brightness-125 transition duration-300",
+
       },
       size: {
         default: "h-10 px-4 py-2",

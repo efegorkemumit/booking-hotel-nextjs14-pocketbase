@@ -6,3 +6,11 @@
 .bgone{
   @apply bg-white dark:bg-mydark2 !important
 }
+
+.validationLabel{
+  @apply text-white dark:text-white !important
+}
+
+.validationError{
+  @apply text-red-500 dark:text-red-400 !important
+}

@@ -13,6 +13,7 @@ import {
 import { SliderImage } from '@/constans'
 import Image from 'next/image'
 import ImageVawes from '@/components/ImageVawes'
+import HeroForm from './HeroForm'
 
 const Hero = () => {
   return (
@@ -48,9 +49,10 @@ const Hero = () => {
    
    
   </CarouselContent>
-  <CarouselPrevious className='left-0' />
-  <CarouselNext className='right-0' />
+  <CarouselPrevious className='hidden lg:flex left-0' />
+  <CarouselNext className='hidden lg:flex right-0' />
 </Carousel>
+<HeroForm/>
 
 </div>
   )
