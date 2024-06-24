@@ -7,6 +7,10 @@
   @apply bg-white dark:bg-mydark2 !important
 }
 
+.bgdark{
+  @apply bg-mydark2 dark:bg-mydark2 !important
+}
+
 .validationLabel{
   @apply text-white dark:text-white !important
 }
