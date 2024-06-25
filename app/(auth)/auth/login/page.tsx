@@ -20,6 +20,8 @@ import { useRouter } from 'next/navigation'
 import { Loader2, Loader2Icon } from 'lucide-react'
 import { Label } from '@/components/ui/label'
 import Link from 'next/link'
+import { useToast } from '@/components/ui/use-toast'
+import { pb } from '@/lib/pocketbase'
 
 const formSchema = z.object({
   email: z.string().min(2, {
@@ -35,6 +37,7 @@ const LoginPage = () => {
 
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -44,11 +47,36 @@ const LoginPage = () => {
     },
   })
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    setIsLoading(true)
+  const onSubmit = async(data: z.infer<typeof formSchema>) => {
 
-    console.log(data)
-    setIsLoading(false)
+    setIsLoading(true)
+    try {
+
+     
+      const record = await pb.collection('users').authWithPassword(
+        data.email, data.password
+      );
+      toast({
+        variant: "success",
+        title: "Login Success",
+      })
+      router.refresh();
+      router.push("/");
+      
+    } catch (error) {
+
+      toast({
+        variant: "destructive",
+        title: "Something went wrong",
+      })
+      
+    }
+    finally{
+      setIsLoading(false)
+    }
+    
+
+   
   }
 
 
