@@ -1,4 +1,6 @@
 
+export const apiImagesUrl = "https://check-facing.pockethost.io/api/files/"
+
 export const NavMenu =[
     {
         title:"Home",
@@ -23,7 +25,7 @@ export const NavMenu =[
 
 
 ]
-
+/*
 export const SliderImage = [
     {
       id: 1,
@@ -41,3 +43,5 @@ export const SliderImage = [
       alt: "slider 3"
     }
   ];
+
+  */
