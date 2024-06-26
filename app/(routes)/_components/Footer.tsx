@@ -1,11 +1,32 @@
 import ImageVawes from '@/components/ImageVawes'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Skeleton } from '@/components/ui/skeleton'
+import { Hotel } from '@/types/types'
 import { PhoneIcon } from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'
 
-const Footer = () => {
+interface FooterProps{
+    data:Hotel;
+    loading:boolean;
+}
+
+const Footer = ({data,loading}:FooterProps) => {
+
+    if(loading || !loading && data.length===0 ){
+        return(
+          <div className='relative text-white'>
+             <div className='z-30 absolute inset-0'>
+                <ImageVawes myclassName='absolute -top-5 transform rotate-180' />
+            </div>
+            <div className='z-20 relative h-96'>
+            <Skeleton className='h-full w-full bg-slate-600 '/>
+            </div>
+          </div>
+        )
+      }
+
     return (
         <div className='relative text-white'>
             <div className='z-10 absolute inset-0'>
@@ -43,7 +64,9 @@ const Footer = () => {
                                 />
 
                             </div>
-                            <p className='text-gray-400 mt-2'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellat vel sit nam deleniti sequi ab eligendi? Dolore sunt ducimus vel tenetur dolor quis ex esse placeat! Voluptas aspernatur odio modi quidem, ratione ullam doloribus deleniti nisi optio nesciunt beatae maxime iste fuga rerum vitae quisquam facere? Tenetur itaque placeat iste.</p>
+                            <p className='text-gray-400 mt-2'>
+                                {data.summary.replace(/<\/?[^>]+(>|$)/g, '')}
+                            </p>
 
                         </div>
 
@@ -65,9 +88,9 @@ const Footer = () => {
                         <div>
                             <h3 className='text-xl font-bold mb-4'>Contact</h3>
                             <p className='text-gray-400 space-y-2'>
-                                <span className='block'> Global Street vs Turkey Istanbul</span>
-                                <span className='block'>+90 555 333 22 22</span>
-                                <span className='block'> efegorkem@youtube.com</span>
+                                <span className='block'> {data.location}</span>
+                                <span className='block'>{data.contact_phone}</span>
+                                <span className='block'> {data.contact_email}</span>
 
                             </p>
 
