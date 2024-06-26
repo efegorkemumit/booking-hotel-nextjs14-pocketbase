@@ -16,16 +16,17 @@ import ImageVawes from '@/components/ImageVawes'
 import HeroForm from './HeroForm'
 import { getSlider } from '@/actions/getSlider'
 import { Skeleton } from '@/components/ui/skeleton'
+import { Slider } from '@/types/types'
 
 const Hero = () => {
 
-  const [sliderImages, setSliderImages] = useState([]);
+  const [sliderImages, setSliderImages] = useState<Slider[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(()=>{
     async function fetchSlider() {
       try {
-        const images = await getSlider();
+        const images: Slider[] = await getSlider();
         setSliderImages(images)
       } catch (error) {
         console.error('Error getting slider images:', error);
