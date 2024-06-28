@@ -22,19 +22,7 @@ const AboutPage = () => {
   return (
     <div className='pt-44'>
 
-    {user ? (
-      <>
-      {user.username}
-      <Button onClick={()=>{localStorage.removeItem('pocketbase_auth'); setUser(null)}}>Logout</Button>
-      </>
-
-    ):(
-      <div>not login</div>
-    )
-  
-  
-  }
-
+   
     </div>
   )
 }
