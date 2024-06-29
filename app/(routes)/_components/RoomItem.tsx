@@ -1,12 +1,19 @@
 import { Button } from '@/components/ui/button'
+import { apiImagesUrl } from '@/constans'
+import { Room } from '@/types/types'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
-const RoomItem = () => {
+interface RoomItemProps{
+    room: Room
+}
+
+const RoomItem = ({room}:RoomItemProps) => {
   return (
     <div className='flex flex-col bgone shadow-xl rounded-md overflow-hidden'>
         <Image
-        src={"https://check-facing.pockethost.io/api/files/qwtemek4arympt4/x2gwvfk7ra6zpom/1gUzbvHSlUI_6DaxRGHCzM.jpg?token="}
+        src={`${apiImagesUrl}/${room.collectionId}/${room.id}/${room.images[0]}`}
         alt=''
         width={1920}
         height={1080}
@@ -15,14 +22,19 @@ const RoomItem = () => {
         />
         <div className='p-4'>
             <h2 className='font-semibold overflow-visible mb-4'>
-                Comfortable Single Room Designed for Ultimate Guest Comfort and Convenience
+              {room.room_name}
             </h2>
             <p className='mb-4'>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim natus dolore, veniam, perferendis expedita accusamus obcaecati rerum nulla voluptatibus sequi omnis laborum aut minus numquam. Eum voluptatem a deserunt quis.
-            </p>
+{room.type}          
+  </p>
             <div className='flex justify-between items-center'>
-                <span className='text-sm text-red-700 dark:text-red-400 font-semibold'> $50 / Turkey</span>
+                <span className='text-sm text-red-700 dark:text-red-400 font-semibold'> ${room.price} / Turkey</span>
+               
+               <Link href={`/rooms/${room.id}`}>
                 <Button variant="mybutton">Reservation</Button>
+                </Link>
+
+
             </div>
 
 
