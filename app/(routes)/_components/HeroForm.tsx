@@ -41,9 +41,7 @@ const formSchema = z.object({
     children: z.string().nonempty({ message: "Select number of children" }),
   })
 
-  const onSubmit = (data: z.infer<typeof formSchema>) =>{
-    console.log(data)
-  }
+ 
 
 const HeroForm = () => {
 
@@ -56,6 +54,10 @@ const HeroForm = () => {
           children: '0',
         },
       })
+
+      const onSubmit = (data: z.infer<typeof formSchema>) =>{
+        console.log(data)
+      }
 
   return (
     <div className='absolute -bottom-28 lg:bottom-[-190px] w-full flex justify-center'>

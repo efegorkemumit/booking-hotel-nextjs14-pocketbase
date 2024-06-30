@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/carousel"
 import { apiImagesUrl } from '@/constans';
 import Image from 'next/image';
+import ReservationForm from '../../_components/ReservationForm';
 
 
 interface RoomPageDetailProps {
@@ -20,7 +21,6 @@ interface RoomPageDetailProps {
 const RoomPageDetail = async ({ params }: RoomPageDetailProps) => {
 
   const room = await getRoomDetail(params.roomId)
-  console.log(room)
   return (
     <div className='pt-44 max-w-6xl mx-auto p-4'>
       <div className='bgone shadow-md rounded-lg overflow-hidden flex flex-col md:flex-row'>
@@ -55,6 +55,12 @@ const RoomPageDetail = async ({ params }: RoomPageDetailProps) => {
 
         </div>
 
+      </div>
+
+      <div className='bgone mt-5 rounded-lg overflow-hidden '>
+        <ReservationForm roomId={params.roomId}/>
+
+        
       </div>
     </div>
   )
