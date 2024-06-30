@@ -1,7 +1,7 @@
 
 "use client"
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -32,22 +32,48 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { useToast } from '@/components/ui/use-toast'
+import { pb } from '@/lib/pocketbase'
 
 
 interface ReservationFormProps {
     roomId: string
 }
 
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
 const formSchema = z.object({
-    guestFullname: z.string().min(2, { message: "Guest Fullname must be at least 2 characters.", }),
-    guestEmail: z.string().min(2, { message: "Guest Email must be at least 2 characters.", }),
-    arrivalDate: z.date().refine(date => !!date, { message: "Arrival date is required" }),
-    departureDate: z.date().refine(date => !!date, { message: "Departure date is required" }),
+    guestFullname: z.string().min(2, { message: "Guest Fullname must be at least 2 characters." }),
+    guestEmail: z.string().email({ message: "Invalid email address." }),
+    arrivalDate: z.date().min(today, { message: "Arrival date must be after today." }),
+    departureDate: z.date().min(today, { message: "Departure date must be after today." }),
     adults: z.string().nonempty({ message: "Select number of adults" }),
     children: z.string().nonempty({ message: "Select number of children" }),
-})
+}).refine(data => data.arrivalDate < data.departureDate, {
+    message: "Arrival date must be before departure date",
+    path: ["departureDate"]
+});
+
 
 const ReservationForm = ({ roomId }: ReservationFormProps) => {
+
+    const [user, setUser] = useState(null);
+    const router = useRouter();
+    const { toast } = useToast()
+    useEffect(() => {
+        const fetchUser = async () => {
+            const authData = localStorage.getItem("pocketbase_auth");
+            if (authData) {
+                const { token, model } = JSON.parse(authData);
+                setUser(model)
+            }
+        }
+        fetchUser();
+    }, [])
+
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -61,8 +87,60 @@ const ReservationForm = ({ roomId }: ReservationFormProps) => {
         },
     })
 
-    const onSubmit = (data: z.infer<typeof formSchema>) => {
-        console.log(data)
+    const onSubmit = async(data: z.infer<typeof formSchema>) => {
+
+        if (!user) {
+            return null;
+            toast({
+                title: "User Login required",
+                variant: "destructive"
+
+            })
+
+        }
+
+        try {
+
+            const reservationdata = {
+                room: roomId,
+                user: user?.id ,
+                guest_fullname: data.guestFullname,
+                guest_email: data.guestEmail,
+                arrival_date: data.arrivalDate.toISOString(),
+                departure_date: data.departureDate.toISOString(),
+                adults: data.adults,
+                children: data.children
+            };
+
+            const record = await pb.collection('reservations').create(reservationdata);
+            toast({
+                title: "Reservation Created",
+                variant: "success"
+
+            })
+
+
+
+        } catch (error) {
+            toast({
+                title: "Something went wrong",
+                variant: "destructive"
+
+            })
+        }
+    }
+
+    if (!user) {
+        return (
+            <div className='p-6 bgone mt-5 rounded-lg overflow-hidden text-center'>
+
+                <span className='ml-2'> Login for Reservation </span>
+                <Link href="/auth/login">
+                    Login Page
+                </Link>
+
+            </div>
+        )
     }
 
     return (
@@ -84,7 +162,7 @@ const ReservationForm = ({ roomId }: ReservationFormProps) => {
                                     <FormControl>
                                         <Input placeholder="Guest Fullname" {...field} />
                                     </FormControl>
-                                 
+
                                     <FormMessage className='validationError' />
                                 </FormItem>
                             )}
@@ -104,7 +182,7 @@ const ReservationForm = ({ roomId }: ReservationFormProps) => {
                                     <FormControl>
                                         <Input type='email' placeholder="Guest Email" {...field} />
                                     </FormControl>
-                                  
+
                                     <FormMessage className='validationError' />
                                 </FormItem>
                             )}
