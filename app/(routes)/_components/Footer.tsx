@@ -39,7 +39,7 @@ const Footer = ({data,loading}:FooterProps) => {
             <div className='z-20 relative'>
                 <div className='container mx-auto pt-24 pb-16 px-4'>
                     <div className='text-center mb-16'>
-                        <h2 className='text-3xl font-bold'>Subscribe newsletter</h2>
+                        <h2 className='text-3xl font-bold'>Subscribe newsletter </h2>
                         <p className='text-gray-400 mt-2'>
                             Newsletter dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                             incididunt ut laboreonsectetur adipiscinget dolore.
