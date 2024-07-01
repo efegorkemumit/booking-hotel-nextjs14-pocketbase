@@ -22,8 +22,8 @@ const RoomPageDetail = async ({ params }: RoomPageDetailProps) => {
 
   const room = await getRoomDetail(params.roomId)
   return (
-    <div className='pt-44 max-w-6xl mx-auto p-4'>
-      <div className='bgone shadow-md rounded-lg overflow-hidden flex flex-col md:flex-row'>
+    <div className='pt-44 max-w-6xl mx-auto p-4 '>
+      <div className='bgone shadow-md rounded-lg myborder overflow-hidden flex flex-col md:flex-row'>
         <div className='md:w-1/2'>
           <Carousel>
             <CarouselContent>
@@ -57,7 +57,7 @@ const RoomPageDetail = async ({ params }: RoomPageDetailProps) => {
 
       </div>
 
-      <div className='bgone mt-5 rounded-lg overflow-hidden '>
+      <div className='bgone mt-5 rounded-lg overflow-hidden shadow-md  mb-8 myborder'>
         <ReservationForm roomId={params.roomId}/>
 
         

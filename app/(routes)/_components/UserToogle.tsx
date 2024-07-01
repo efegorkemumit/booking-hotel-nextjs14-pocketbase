@@ -41,7 +41,9 @@ const UserToogle = () => {
         <DropdownMenuContent>
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Profile</DropdownMenuItem>
+          <Link href="/my-reservation">
+          <DropdownMenuItem>My Reservation</DropdownMenuItem>
+          </Link>
           <DropdownMenuItem  onClick={()=>{localStorage.removeItem('pocketbase_auth'); setUser(null); router.refresh(); router.push("/")}}>Logout</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
